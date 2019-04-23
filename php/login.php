@@ -4,9 +4,16 @@ if (array_key_exists('login', $_REQUEST) &&
  	require 'config.phplib';
 	$conn = pg_connect("user=".$CONFIG['username'].
 	    " dbname=".$CONFIG['database']);
+	
+	/* INSECURE
 	$result = pg_query("SELECT * from users
 	    WHERE login='".$_REQUEST['login']."'
 	    AND password='".$_REQUEST['password']."'");
+	
+	*/
+	$result = pg_query_params($db, "SELECT role FROM users WHERE username=$1 AND password=$2 ", array($username, $password)); 
+	
+	
 	$row = pg_fetch_assoc($result);
 	if ($row === False) {
 		require 'header.php';
