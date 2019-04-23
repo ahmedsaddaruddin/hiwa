@@ -21,7 +21,11 @@ if (array_key_exists("username", $_POST)) {
 		}
 	}
 
+	/* INSECURE
 	$query = "select role from users where login='$_POST[username]'";
+	*/
+	$query = pg_query_params($db, "SELECT role FROM users WHERE username=$1", array($username));
+	
 	$conn = pg_connect('user='.$CONFIG['username'].
 		' dbname='.$CONFIG['database']);
 	$res = pg_query($conn, $query);
