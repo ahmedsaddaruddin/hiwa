@@ -51,8 +51,8 @@ else if (array_key_exists('custid', $_REQUEST) &&
 <body>
 <?php require 'header.php';?>
 <div class="title">HIWA Manage Customers</div>
-<div class="subtitle">Logged in as <?php echo $_COOKIE['hiwa-user'];?>
-	(<?php echo $role; ?>)
+<div class="subtitle">Logged in as <?php echo .htmlentities($_COOKIE['hiwa-user']);?>
+	(<?php echo .htmlentities($role); ?>)
 </div>
 
 <?php
