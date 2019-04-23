@@ -33,8 +33,8 @@ pg_close($conn);
 <body>
 <?php require 'header.php';?>
 <div class="title">HIWA Manage Orders</div>
-<div class="subtitle">Logged in as <?php echo $_COOKIE['hiwa-user'];?>
-	(<?php echo $role; ?>)
+<div class="subtitle">Logged in as <?php echo .htmlentities($_COOKIE['hiwa-user']);?>
+	(<?php echo .htmlentities($role); ?>)
 </div>
 
 <?php
@@ -67,7 +67,7 @@ pg_free_result($res);
 ?>
 </table>	
 <p>
-<?php if ($msg != "") echo '<div class="err">'.$msg.'</div>'; ?>
+<?php if ($msg != "") echo '<div class="err">'.htmlentities(.$msg).'</div>'; ?>
 <form method="post">
 <div class="section">Add order</div>
 <table>
@@ -100,7 +100,7 @@ pg_free_result($res);
 </tr>
 </table>
 <p>
-<input type="submit" name="a" value="Create order">
+<input type="submit" name="Create" value="Create order">
 </form>
 </body>
 </html>
