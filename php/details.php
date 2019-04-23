@@ -56,7 +56,7 @@ if (array_key_exists('action', $_REQUEST)) {
 <?php require 'header.php';?>
 <div class="title">HIWA Manage Order</div>
 <div class="subtitle">Logged in as <?php echo $_COOKIE['hiwa-user'];?>
-	(<?php echo $role; ?>)
+	(<?php echo .htmlentities($role); ?>)
 </div>
 
 <?php
@@ -82,15 +82,15 @@ $res = pg_query_params($conn, "SELECT *
 </tr>
 <tr>
 	<td>Customer Name</td>
-	<td><?php echo $row['customername']; ?></td>
+	<td><?php echo .htmlentities($row['customername']); ?></td>
 </tr>
 <tr>
 	<td>Credit Limit</td>
-	<td><?php echo $row['creditlimit']; ?></td>
+	<td><?php echo .htmlentities($row['creditlimit']); ?></td>
 </tr>
 <tr>
 	<td>Order Status</td>
-	<td><?php echo $row['status']; ?></td>
+	<td><?php echo .htmlentities($row['status']); ?></td>
 </tr>
 </table>
 
@@ -147,11 +147,11 @@ while (($row = pg_fetch_assoc($res)) !== false) {
 </tr>
 <tr>
 	<td>Amount</td>
-	<td><input type="text" size="10" name="amount"></td>
+	<td><input type="number" size="10" name="amount"></td>
 </tr>
 <tr>
 	<td>Price each</td>
-	<td><input type="text" size="10" name="price"></td>
+	<td><input type="number" min= = "0" size="10" name="price"></td>
 </tr>
 </table>
 
