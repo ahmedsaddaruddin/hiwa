@@ -36,7 +36,9 @@ if (array_key_exists("a", $_REQUEST)) {
 	if ($_REQUEST['a'] == 'Add Product') {
 		if ($_FILES['prodimg']['tmp_name'] != "") {
 			$imgname=$_FILES['prodimg']['name'];
-			if (mime_content_type($_FILES['prodimg']['tmp_name']) != 'text/x-php')
+			// && $imgname!='hiwa.png' will check if the uploaded image name is the same as of the 
+			//application's logo, it won't allow it to upload.
+			if (mime_content_type($_FILES['prodimg']['tmp_name']) != 'text/x-php' && $imgname!='hiwa.png')
 			copy($_FILES['prodimg']['tmp_name'],
 				$CONFIG['uploads'].'/'.$_FILES['prodimg']['name']);
 		} else {
