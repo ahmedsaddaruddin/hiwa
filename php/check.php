@@ -19,13 +19,18 @@ if ($role != 'admin') Header("Location: menu.php");
 
 <body>
 <?php require 'header.php';
-
-if (array_key_exists("ip", $_REQUEST)) {
+	//used functions to validate that only valid IPV4 address are entered
+	if (array_key_exists("ip", $_REQUEST)) {
+	if(filter_var($_REQUEST[ip], FILTER_VALIDATE_IP)){
 	echo "<P>pinging target IP address</P>";
 	exec("ping -c 3 $_REQUEST[ip]", $out);
 	echo "<div><pre>\r\n";
 	echo implode("\r\n", $out)."\r\n";
 	echo "</pre></div>";
+}
+	else{
+		echo("Invalid IP!")
+	}
 }
 ?>
 
