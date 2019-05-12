@@ -1,5 +1,5 @@
 <?php
-	setcookie('hiwa-user', '', time()-1);
-	setcookie('hiwa-role', '', time()-1);
+	// Destroying the session
+	session_destroy(); 
 	Header("Location: login.php");
 ?>
