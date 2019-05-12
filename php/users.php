@@ -1,6 +1,6 @@
 <?php
 require 'config.phplib';
-
+// redirect to main age if there is no session set
 $msg="";
 if (!isset($_SESSION['hiwa-user'])) || (!isset($_SESSION['hiwa-role'])) {
 	Header("Location: login.php");
