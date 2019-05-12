@@ -2,12 +2,10 @@
 require 'config.phplib';
 
 $msg="";
-if (!array_key_exists('hiwa-user', $_SESSION) ||
-    !array_key_exists('hiwa-role', $_SESSION)) {
+if (!isset($_SESSION['hiwa-user'])) || (!isset($_SESSION['hiwa-role'])) {
 	Header("Location: login.php");
 	exit();
 }
-
 $role=$_SESSION['hiwa-role'];
 
 if (array_key_exists('action', $_REQUEST) &&
