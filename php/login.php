@@ -18,7 +18,7 @@ if (array_key_exists('login', $_REQUEST) &&
 		print '<div class="err">Incorrect username/password</div>';
 		exit();
 	}
-	setcookie("hiwa-user", $_REQUEST['login']);
+	setcookie("hiwa-user", $_SESSION['login']);
 	setcookie("hiwa-role", $row['role']);
 	Header("Location: menu.php");
 	exit();
