@@ -2,9 +2,8 @@
 require 'config.phplib';
 
 $msg="";
-if (!array_key_exists('hiwa-user', $_COOKIE) ||
-    !array_key_exists('hiwa-role', $_COOKIE)) {
-	Header("Location: login.php");
+if (!isset($_SESSION['user'] || !isset($_SESSION['role'])
+	   Header("Location: login.php");
 	exit();
 }
 
