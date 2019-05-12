@@ -2,13 +2,13 @@
 require 'config.phplib';
 
 $msg="";
-if (!array_key_exists('hiwa-user', $_COOKIE) ||
-    !array_key_exists('hiwa-role', $_COOKIE)) {
+
+if (!isset($_SESSION['hiwa-user'])) || (!isset($_SESSION['hiwa-role'])) {
 	Header("Location: login.php");
 	exit();
 }
 
-$role=$_COOKIE['hiwa-role'];
+$role=$_SESSION['hiwa-role'];
 if ($role != 'admin') Header("Location: menu.php");
 ?>
 <html>
