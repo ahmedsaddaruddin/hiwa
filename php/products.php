@@ -23,9 +23,11 @@ if (array_key_exists('action', $_REQUEST) && array_key_exists('prodid', $_REQUES
 		$nextAction = "update";
 		$conn = pg_connect('user='.$CONFIG['username'].
 			' dbname='.$CONFIG['database']);
-		$res = pg_query("select productid,productname,productdescr,msrp,imageurl from products where productid='".
-			$_REQUEST['prodid']."'");
-		$cache = pg_fetch_assoc($res);
+		// used prepare to protect against SQL injection
+		$res = pg_prepare($conn,"edit_statement","select productid,productname,productdescr,msrp,imageurl from products where productid='".
+			$retrieved_id."'");
+		$result=pg_execute($conn,"edit_statement"); 
+		$cache = pg_fetch_assoc($result);
 		pg_free_result($res);
 		pg_close($conn);
 	}
