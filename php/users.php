@@ -2,13 +2,12 @@
 require 'config.phplib';
 
 $msg="";
-if (!array_key_exists('hiwa-user', $_COOKIE) ||
-    !array_key_exists('hiwa-role', $_COOKIE)) {
+if (!isset($_SESSION['hiwa-user'])) || (!isset($_SESSION['hiwa-role'])) {
 	Header("Location: login.php");
 	exit();
 }
 
-$role=$_COOKIE['hiwa-role'];
+$role=$_SESSION['hiwa-role'];
 if ($role != 'admin') Header("Location: menu.php");
 
 if (array_key_exists('action', $_REQUEST) &&
@@ -17,9 +16,11 @@ if (array_key_exists('action', $_REQUEST) &&
 	if ($_REQUEST['user'] != 'guest') {
 		$conn = pg_connect('user='.$CONFIG['username'].
 			' dbname='.$CONFIG['database']);
-		$res = pg_query($conn, "DELETE FROM users WHERE login='".
-			$_REQUEST['user']."'");
-		if ($res === False) {
+		//used pg_prepared to rotect from SQL injection
+		$res = pg_prepare($conn,"delete_query", "DELETE FROM users WHERE login='".
+			mysql_real_escape_string(htmlentities($_REQUEST['user']))."'");
+		$result=pg_execute($conn,"delete_query"); // executing 
+		if ($result === False) {
 			$msg = "Unable to remove user";
 		} 
 	} else $msg = "Do not remove guest; it would break the game.";
@@ -57,7 +58,7 @@ else if (array_key_exists('username', $_REQUEST) &&
 <body>
 <?php require 'header.php';?>
 <div class="title">HIWA Manage Users</div>
-<div class="subtitle">Logged in as <?php echo $_COOKIE['hiwa-user'];?>
+<div class="subtitle">Logged in as <?php echo $_SESSION['hiwa-user'];?>
 	(<?php echo $role; ?>)
 </div>
 
