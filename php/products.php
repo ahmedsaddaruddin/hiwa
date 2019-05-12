@@ -2,13 +2,12 @@
 require 'config.phplib';
 
 $msg="";
-if (!array_key_exists('hiwa-user', $_COOKIE) ||
-    !array_key_exists('hiwa-role', $_COOKIE)) {
+if (!isset($_SESSION['hiwa-user'])) || (!isset($_SESSION['hiwa-role'])) {
 	Header("Location: login.php");
 	exit();
 }
 
-$role=$_COOKIE['hiwa-role'];
+$role=$_['hiwa-role'];
 
 $nextAction = "blank";
 if (array_key_exists('action', $_REQUEST) && array_key_exists('prodid', $_REQUEST)) {
@@ -16,7 +15,7 @@ if (array_key_exists('action', $_REQUEST) && array_key_exists('prodid', $_REQUES
 		$conn = pg_connect('user='.$CONFIG['username'].
 			' dbname='.$CONFIG['database']);
 		$res = pg_query($conn, "DELETE FROM products WHERE 
-			productid='".$_REQUEST['prodid']."'");
+			productid='".(int)$_REQUEST['prodid']."'"); //make sure that the id is always an integer
 		if ($res === FALSE) {
 			$msg = "Unable to remove customer";
 		}
